@@ -114,10 +114,9 @@ def test_bbox_matches_full_block_speckles(downsample):
 
 def test_bbox_matches_full_block_anisotropic():
     labels = voronoi_labels((16, 32, 32), num_seeds=8, seed=2)
-    kwargs = dict(sigma=(8, 6, 6), voxel_size=(2, 1, 1), downsample=2)
-    np.testing.assert_allclose(
-        get_lsds(labels, **kwargs), get_lsds_full_block(labels, **kwargs), rtol=0, atol=1e-6
-    )
+    ref = get_lsds_full_block(labels, sigma=(8, 6, 6), voxel_size=(2, 1, 1), downsample=2)
+    out = get_lsds(labels, sigma=(8, 6, 6), voxel_size=(2, 1, 1), downsample=2)
+    np.testing.assert_allclose(out, ref, rtol=0, atol=1e-6)
 
 
 def test_bbox_matches_full_block_label_subset():
